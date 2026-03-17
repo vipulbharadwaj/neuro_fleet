@@ -1,8 +1,12 @@
 import { ChevronDown, Key, KeyRound, Mail, User } from "lucide-react";
 import React from "react";
 import { useState } from "react";
+import { mockLogin } from "./useAuth";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+
+  const navigate = useNavigate();
   const [loginState, setLoginState] = useState("signup");
   const [formData, setFormData] = useState({
     name: "",
@@ -15,7 +19,17 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const result = mockLogin(formData.email, formData.password);
+
+    if (result.success) {
+      navigate(`/${result.role}/dashboard`);
+    } else {
+      alert(result.message);
+    }
+    
   };
+
+
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -40,50 +54,50 @@ const Login = () => {
 
         {loginState !== "login" && (
           <div className=" w-full  flex items-center mt-6 gap-2 bg-black/5 ring-2 ring-black/10 focus-within:ring-indigo-500/60 h-12 rounded-full overflow-hidden pl-6 transition-all">
-            <User className="text-black/60" />
+            <User className="text-black-60 dark:text-gray-50" />
             <input
               type="text"
               name="name"
               placeholder="Name"
               onChange={handleChange}
               value={formData.name}
-              className="w-full border-none text-black placeholder:black/60 outline-none bg-transparent"
+              className="w-full border-none text-black dark:text-gray-50 placeholder:black/60 outline-none bg-transparent"
               required
             />
           </div>
         )}
 
         <div className="w-full h-12 flex items-center mt-4 gap-2 bg-black/5 ring-2 ring-black/10 focus-within:ring-indigo-500/60 rounded-full overflow-hidden pl-6 transtiton-all">
-          <Mail className="text-black/60" />
+          <Mail className="text-black/60 dark:text-gray-50" />
           <input
             type="text"
             name="email"
             placeholder="Email"
             onChange={handleChange}
             value={formData.email}
-            className="w-full border-none outline-none text-black placeholder:black/60 bg-transparent"
+            className="w-full border-none outline-none text-black dark:text-gray-50 placeholder:black/60 bg-transparent"
           />
         </div>
 
         <div className="w-full h-12 flex items-center mt-4 gap-2 bg-black/5 ring-2 ring-black/10 focus-within:ring-indigo-500/60 rounded-full overflow-hidden pl-6 transition-all">
-          <KeyRound className="text-black/60" />
+          <KeyRound className="text-black/60 dark:text-gray-50" />
           <input
             type="text"
             name="password"
             placeholder="Password"
             onChange={handleChange}
             value={formData.password}
-            className="w-full border-none outline-none text-black placeholder:black/60 bg-transparent"
+            className="w-full border-none outline-none text-black dark:text-gray-50 placeholder:black/60 bg-transparent"
           />
         </div>
 
         <div className="relative w-full mt-4">
-          <div className="w-full h-12 flex-items-center bg-black/5 rounded-full transition-all ring-2 ring-black/10 focus-within:ring-indigo-500/60">
+          <div className="w-full h-12 flex-items-center bg-black/5 dark:text-gray-50 rounded-full transition-all ring-2 ring-black/10 dark:ring-white/10 focus-within:ring-indigo-500/60">
             <select
               name="role"
               onChange={handleChange}
               value={formData.role}
-              className="w-full h-full px-6 pr-12 bg-transparent outline-none appearance-none cursor-pointer text-black"
+              className="w-full h-full px-6 pr-12 bg-transparent outline-none appearance-none cursor-pointer text-black dark:text-rose-500"
             >
               <option value=""> Select Role</option>
               {roles.map((role) => {
@@ -94,7 +108,7 @@ const Login = () => {
                 );
               })}
             </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-black/60 pointer-events-none" />
+            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-black/60 dark:text-gray-50 pointer-events-none" />
           </div>
         </div>
 

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-NeuroApplication<neuro>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.neuro.NeuroApplication",
+            "projectName": "neuro",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
